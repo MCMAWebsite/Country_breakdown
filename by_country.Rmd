@@ -8,12 +8,11 @@ knitr::opts_chunk$set(warning=F)
 knitr::opts_chunk$set(message=F)
 
 print("In Country_breakdown/by_country.Rmd")
-user_docs <- path.expand('~')
-country_breakdown_dir <- paste0(user_docs, "/Website/Country_breakdown")
+country_breakdown_dir <- file.path(path.expand('~'), "Website", "Country_breakdown")
 
-install.packages("tidyverse", repos="http://cran.us.r-project.org")
-install.packages("kableExtra", repos="http://cran.us.r-project.org")
-install.packages("DT", repos="http://cran.us.r-project.org")
+if(!require(tidyverse)) {install.packages("tidyverse", repos="https://cran.us.r-project.org")}
+if(!require(kableExtra)) {install.packages("kableExtra", repos="https://cran.us.r-project.org")}
+if(!require(DT)) {install.packages("DT", repos="https://cran.us.r-project.org")})
 
 library(tidyverse)
 library(readr)
@@ -26,14 +25,14 @@ library(stringr)
 library(scales)
 Sys.setenv(TZ='EST')
 
-mcma_objs = readRDS(paste0(country_breakdown_dir, "/RDSfiles/all_conjs"))
-all_conjs = readRDS(paste0(country_breakdown_dir, "/RDSfiles/all_conjs"))
-all_conjs_expanded = readRDS(paste0(country_breakdown_dir, "/RDSfiles/all_conjs_expanded"))
-derelicts = readRDS(paste0(country_breakdown_dir, "/RDSfiles/derelicts"))
-derelictDat = readRDS(paste0(country_breakdown_dir, "/RDSfiles/derelictDatNew"))
-alt_bins = readRDS(paste0(country_breakdown_dir, "/RDSfiles/alt_bins"))
-file_list = readRDS(paste0(country_breakdown_dir, "/RDSfiles/file_list"))
-all_conjs_2016 = readRDS(paste0(country_breakdown_dir, "/RDSfiles/all_conjs_2016"))
+mcma_objs = readRDS(file.path(country_breakdown_dir, "RDSfiles", "all_conjs"))
+all_conjs = readRDS(file.path(country_breakdown_dir, "RDSfiles","all_conjs"))
+all_conjs_expanded = readRDS(file.path(country_breakdown_dir, "RDSfiles", "all_conjs_expanded"))
+derelicts = readRDS(file.path(country_breakdown_dir, "RDSfiles", "derelicts"))
+derelictDat = readRDS(file.path(country_breakdown_dir, "RDSfiles", "derelictDatNew"))
+alt_bins = readRDS(file.path(country_breakdown_dir, "RDSfiles", "alt_bins"))
+file_list = readRDS(file.path(country_breakdown_dir, "RDSfiles", "file_list"))
+all_conjs_2016 = readRDS(file.path(country_breakdown_dir, "RDSfiles", "all_conjs_2016"))
 
 today = toupper(strftime(Sys.Date(), format="%d%b%Y")) # current day
 
@@ -52,7 +51,7 @@ today = toupper(strftime(Sys.Date(), format="%d%b%Y")) # current day
 #  
 # all_conjs_new = data.frame()
 #  for (i in 1:length(file_list_new)) {
-#    file = paste0(path, file_list_new[i])
+#    file = file.path(path, file_list_new[i])
 #    
 #    firstLine = readLines(file, n=2)[2]
 #    
@@ -70,8 +69,8 @@ today = toupper(strftime(Sys.Date(), format="%d%b%Y")) # current day
 #  }
 #  
 #  mycols <- '(PrimaryCluster, SecondaryCluster)'
-#  minf <- paste0('min',mycols)
-#  maxf <- paste0('max',mycols)
+#  minf <- file.path('min',mycols)
+#  maxf <- file.path('max',mycols)
 #  
 #  all_conjs_new = all_conjs_new %>%
 #    mutate(DateGenerated = parse_date_time(DateGenerated, tz="EST", 
@@ -241,7 +240,7 @@ ggplot() +
   scale_y_continuous(labels = scales::percent) + 
   scale_fill_brewer(palette = "Set1")+
   labs(x="Cluster",y="", title = "Percent of Encounters by Country - misses within 5 km", fill="Country",
-       subtitle="Number of encounters shown above each bar", caption=paste0("Encounters from 20OCT2019-", today))
+       subtitle="Number of encounters shown above each bar", caption=file.path("Encounters from 20OCT2019-", today))
 ```
 
 ```{r barchart500m, fig.width=7.5}
@@ -274,4 +273,4 @@ ggplot() +
   scale_y_continuous(labels = scales::percent) + 
   scale_fill_brewer(palette = "Set1")+
   labs(x="Cluster",y="", title = "Percent of Encounters by Country - misses within 500 m", fill="Country",
-       subtitle="Number of encounters shown above each bar", caption=paste0("Encounters from 20OCT2019-", today))
+       subtitle="Number of encounters shown above each bar", caption=file.path("Encounters from 20OCT2019-", today))
