@@ -1,5 +1,5 @@
 ---
-title: 'By Country Breakdown'
+title: "By Country Breakdown"
 output: html_document
 ---
 ```{r include=F}
@@ -12,7 +12,7 @@ country_breakdown_dir <- file.path(path.expand('~'), "Website", "Country_breakdo
 
 if(!require(tidyverse)) {install.packages("tidyverse", repos="https://cran.us.r-project.org")}
 if(!require(kableExtra)) {install.packages("kableExtra", repos="https://cran.us.r-project.org")}
-if(!require(DT)) {install.packages("DT", repos="https://cran.us.r-project.org")})
+if(!require(DT)) {install.packages("DT", repos="https://cran.us.r-project.org")}
 
 library(tidyverse)
 library(readr)
